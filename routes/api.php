@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\API\ResponseBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -22,7 +23,9 @@ use App\Http\Controllers\PostController;
 
 Route::post('/register', [AuthController::class,'register']);
 Route::post('/login', [AuthController::class,'login']);
-
+Route::get('/exception',function (Request $request) {
+    return ResponseBuilder::response(null, "you need to login first.", ["you need to login first."], ResponseBuilder::Success);
+})->name("exception");
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/posts/store', [PostController::class,'store']);
     Route::post('/posts/{post}/upload-image', 'PostController@uploadImage');
